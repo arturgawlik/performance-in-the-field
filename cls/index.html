@@ -22,7 +22,6 @@
     </p>
     <script type="module">
         let allCLSData = [];
-        // collectCLSData();
         
         const mostImportantLCP = await pickMostImportantLCP(2000);
         console.log(mostImportantLCP?.node);
@@ -43,16 +42,6 @@
             const prefObs = new PerformanceObserver(list => {
                 allCLSData.push(list.getEntries()[0]);
             }).observe({ type: "layout-shift", buffered: true });
-        }
-
-        function collectCLSData() {
-            const perfObs = new PerformanceObserver((list) => {
-                for (const entry of list.getEntries()) {
-                    // log's all layout shifts that was occured 
-                    console.log(entry);
-                }
-            });
-            perfObs.observe({ type: 'layout-shift', buffered: true });
         }
 
         function getCLSDebugTarget(allCollectedLCPs) {
