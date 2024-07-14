@@ -21,7 +21,29 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla adipisci, vitae similique voluptatibus facilis veritatis aliquam magnam cupiditate qui, mollitia voluptate accusamus eius tenetur, rem nesciunt ratione dicta expedita nobis.
     </p>
     <script type="module">
-        collectCLSData();
+        let allCLSData = [];
+        // collectCLSData();
+        
+        const mostImportantLCP = await pickMostImportantLCP(2000);
+        console.log(mostImportantLCP?.node);
+
+        function pickMostImportantLCP(time) {
+            const { promise, resolve } = Promise.withResolvers();
+            agregateAllCLSData();
+            setTimeout(() => {
+                const debugTarget = getCLSDebugTarget(allCLSData);
+                resolve(debugTarget);
+            }, time);
+
+            return promise;
+        }
+
+        function agregateAllCLSData() {
+            allCLSData = [];
+            const prefObs = new PerformanceObserver(list => {
+                allCLSData.push(list.getEntries()[0]);
+            }).observe({ type: "layout-shift", buffered: true });
+        }
 
         function collectCLSData() {
             const perfObs = new PerformanceObserver((list) => {
@@ -31,6 +53,17 @@
                 }
             });
             perfObs.observe({ type: 'layout-shift', buffered: true });
+        }
+
+        function getCLSDebugTarget(allCollectedLCPs) {
+            const largestCollectedLCP = allCollectedLCPs.reduce((cur, prev) => cur?.value > prev?.value ? cur : prev);
+            if (largestCollectedLCP?.sources?.length > 0) {
+                const largestSource = largestCollectedLCP.sources.reduce((cur, prev) => cur.previousRect.width * cur.previousRect.height > prev.previousRect.width * prev.previousRect.height ? cur : prev)
+                if (largestSource) {
+                    return largestSource;
+                }
+            }
+            return null;
         }
     </script>
 </body>
