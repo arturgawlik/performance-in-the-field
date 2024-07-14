@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lcp</title>
+</head>
+<body>
+    <img alt="img which will cause CLS" src="https://media.4-paws.org/7/b/8/4/7b84da50b67c8c39b9deb0d6581efa3309960ed6/VIER%20PFOTEN_2019-12-13_209-2001x2000-600x600.jpg">
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. In voluptas amet fuga molestias sit possimus. Enim, nisi animi! Cum sapiente ex unde fugit sunt veritatis id, repellat vel molestiae eveniet!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, corporis exercitationem? Soluta nobis tempore voluptas sed impedit perferendis? Placeat aut, autem cum tenetur explicabo earum beatae non at architecto repellat!
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium alias maiores, magni molestiae consectetur eveniet placeat enim nulla est odit eum? Possimus sapiente reprehenderit sed eos? Eum libero sint laboriosam.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla adipisci, vitae similique voluptatibus facilis veritatis aliquam magnam cupiditate qui, mollitia voluptate accusamus eius tenetur, rem nesciunt ratione dicta expedita nobis.
+    </p>
+    <img alt="img which will cause CLS" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg">
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. In voluptas amet fuga molestias sit possimus. Enim, nisi animi! Cum sapiente ex unde fugit sunt veritatis id, repellat vel molestiae eveniet!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, corporis exercitationem? Soluta nobis tempore voluptas sed impedit perferendis? Placeat aut, autem cum tenetur explicabo earum beatae non at architecto repellat!
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium alias maiores, magni molestiae consectetur eveniet placeat enim nulla est odit eum? Possimus sapiente reprehenderit sed eos? Eum libero sint laboriosam.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla adipisci, vitae similique voluptatibus facilis veritatis aliquam magnam cupiditate qui, mollitia voluptate accusamus eius tenetur, rem nesciunt ratione dicta expedita nobis.
+    </p>
+    <script type="module">
+        mesureLCP();
+        
+        function mesureLCP() {
+            new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+
+                console.log('LCP element: ', lastEntry.element);
+            }).observe({ type: 'largest-contentful-paint', buffered: true });
+        }
+    </script>
+</body>
+</html>
